@@ -1,40 +1,43 @@
-"use client"
+"use client";
 import SearchBox from "./components/SearchBox";
 import RobotCard from "./components/RobotCard";
 import RobotsData from "./robots/robots.json";
-import {useState, useEffect} from "react";
+import Grid from "@mui/joy/Grid";
+import { useState, useEffect } from "react";
 
 export default function Home() {
   const [query, setQuery] = useState("");
   const [filteredRobots, setFilteredRobots] = useState([]);
+
   useEffect(() => {
+    console.log(query);
     const filtered = RobotsData.filter((robot) => {
       return robot.name.toLowerCase().includes(query.toLowerCase());
     });
+    console.log(filtered);
     setFilteredRobots(filtered);
   }, [query]);
+
   return (
-    <div className="bg-auto text-center bg-gradient-to-r from-cyan-500 to-indigo-600">
+    <div className="bg-auto text-center bg-gradient-to-r from-cyan-500 to-indigo-600" style={{minHeight:"100vh"}}>
       <div className="container mx-auto py-4">
         <h1 className="text-xl text-white">RoboFriends</h1>
-        <SearchBox setQuery={setQuery}
-/>
-        <div className="container">
-          <div className="columns-1 sm:columns-2 md:columns-2 xl:columns-4 gap-y-3 my-6">
+        <SearchBox setQuery={setQuery} />
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          columns={{ xs: 12, sm: 6, md: 4 }}
+        >
           {filteredRobots.map((robot) => (
-              <RobotCard key={robot.id} name={robot.name} email={robot.email} id={robot.id} />
-            ))}
-            {RobotsData.map((robot) => {
-              return (
-                <RobotCard
-                  name={robot.name}
-                  email={robot.email}
-                  id={robot.id}
-                />
-              );
-            })}
-          </div>
-        </div>
+            <RobotCard
+              key={robot.id}
+              name={robot.name}
+              email={robot.email}
+              id={robot.id}
+            />
+          ))}
+        </Grid>
       </div>
     </div>
   );
