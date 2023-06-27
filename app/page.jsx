@@ -10,11 +10,9 @@ export default function Home() {
   const [filteredRobots, setFilteredRobots] = useState([]);
 
   useEffect(() => {
-    console.log(query);
     const filtered = RobotsData.filter((robot) => {
       return robot.name.toLowerCase().includes(query.toLowerCase());
     });
-    console.log(filtered);
     setFilteredRobots(filtered);
   }, [query]);
 
